@@ -4,6 +4,8 @@
     "tslint-react"
   ],
   "rules": {
+    "interface-name": false,
+    "member-access": true,
     "indent": [
       true,
       "spaces"

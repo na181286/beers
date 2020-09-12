@@ -1,8 +1,10 @@
 {
-  "name": "acerous",
-  "version": "0.2.1",
+  "name": "beers",
+  "version": "0.1.1",
   "private": true,
+  "description": "",
   "dependencies": {
+    "@types/node": "12.7.4",
     "@types/react": "^16.0.0",
     "@types/react-dom": "^16.0.0",
     "react": "^16.0.0",
