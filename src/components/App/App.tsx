@@ -15,6 +15,7 @@ class App extends React.Component {
     error: false,
     beers: [] as BeerItem[],
     page: 1,
+    all: false,
   };
   public componentDidMount() {
     if (window && window.XMLHttpRequest) {
@@ -118,12 +119,19 @@ class App extends React.Component {
       request.onreadystatechange = () => {
         if (request.readyState === 4 && request.status === 200) {
           const items = JSON.parse(request.responseText);
-          const updatedBeers = beers.concat(items);
-          this.setState({
-            isLoaded: true,
-            beers: updatedBeers,
-            page,
-         });
+          if (items.length === 0) {
+            this.setState({
+              isLoaded: true,
+              all: true,
+           });
+          } else {
+            const updatedBeers = beers.concat(items);
+            this.setState({
+              isLoaded: true,
+              beers: updatedBeers,
+              page,
+           });
+          }
         }
       };
     }
@@ -149,14 +157,16 @@ class App extends React.Component {
   }
 
   public render() {
-    const loadMoreBtn = <div className="LoadMore" onClick={this.loadMore}>Load More</div>;
-    const loadMore = (this.state.beers && this.state.beers.length > 0) ? loadMoreBtn : null;
+    const btn = (<button className="LoadMore" onClick={this.loadMore} disabled={this.state.all}>Load More</button>);
+    const loadMore = (this.state.beers && this.state.beers.length > 0) ? btn : null;
+    const thatsall = this.state.all ? (<div className="all">That is all beers</div>) : null;
     return (
       <div className="App">
         <h1>Beers</h1>
           {this.state.isLoaded === false && (<div>Loading...</div>)}
           {this.state.error  && (<div>Error</div>)}
           {this.state.beers && <BeerList beers={this.state.beers}/>}
+          {thatsall}
           {loadMore}
       </div>
     );
