@@ -18,6 +18,9 @@ class App extends React.Component {
     all: false,
   };
   public componentDidMount() {
+    document.ontouchmove = (event) => {
+      event.preventDefault();
+  };
     if (window && window.XMLHttpRequest) {
       let request = new window.XMLHttpRequest();
 
